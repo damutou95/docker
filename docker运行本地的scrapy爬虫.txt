@@ -1,0 +1,15 @@
+#docker 运行需要root权限，这里是Ubuntu的命令
+sudo -i
+#上一步输入密码后进入root用户
+#从docker账户上下载自己的容器，这里本人的容器xiyujing/scrapy:v3在我的账号里
+docker pull xiyujing/scrapy:v3
+#用镜像xiyujing/scrapy:v3 创建容器，自己的代码只需要修改镜像名和版本号，也就是这里的xiyujing/scrapy:v3就可以，这里是我自己的镜像，已经保存在我的dockerhub里，下载下来就可以
+root@xiyujing:~# docker run -it xiyujing/scrapy:v3 /bin/bash
+#将本地的项目根目录(我电脑上的/home/xiyujing/yangZi)连接到容器中(/codes得是镜像里已经存在的路径，可以在最开始创建镜像时的dockerfile文件里用mkdir创建),成功后，容器里的/codes路径就相当于自己机子上的/home/xiyujing/yangZi
+root@xiyujing:~# docker run -it -v /home/xiyujing/yangZi:/codes xiyujing/scrapy:v3
+#然后输入scrapy,就相当于我们平时的开发了，scrapy crawl xinwen这就运行了爬虫
+root@3be63bb0a522:/codes# scrapy
+root@3be63bb0a522:/codes# scrapy crawl xinwen
+
+
+

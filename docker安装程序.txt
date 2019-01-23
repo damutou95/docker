@@ -1,0 +1,19 @@
+#docker 运行需要root权限，这里是Ubuntu的命令
+sudo -i
+#上一步输入密码后进入root用户
+#用镜像xiyujing/scrapy:v3 创建容器，自己的代码只需要修改镜像名和版本号，也就是这里的xiyujing/scrapy:v3就可以，这里是我自己的镜像，已经保存在我的dockerhub里，下载下来就可以
+root@xiyujing:~# docker run -it xiyujing/scrapy:v3 /bin/bash
+#创建好了容器以后就会出现容器id，也就是7ba7ac0af28d，每次都不一样，然后安装自己想好要的软件，这里我安装pyexecjs
+root@7ba7ac0af28d:/codes# pip3 install pyexecjs
+#安装好后更新软件包
+root@7ba7ac0af28d:/codes# apt-get update
+#更新完后退出
+root@7ba7ac0af28d:/codes# exit
+#然后登录dockerhub
+root@xiyujing:~# docker login
+#更新镜像的修改内容 -m 里面是修改日志，-a 里面是修改的人，也就是谁修改的， 7ba....这一串就是刚才的容器id，最后面是你更新后的镜像你想要取的名字，这里我只改了tag，我改成了v4，意思是第四个版本
+root@xiyujing:~# docker commit -m="apt-get install pyexecjs" -a="xiyujing" 7ba7ac0af28d xiyujing/scrapy:v4
+#更新镜像后要把镜像发布到dockerhub上来提供下一次使用，不然下次又得重新安装pyexecjs了，
+root@xiyujing:~# docker push xiyujing/scrapy:v4
+
+
